@@ -8,11 +8,11 @@ public class Waze {
     /**
     * Copyright (C), 2022-2023, FabianJuarez SaraEcheverria Jose Pablo Kiesling Melissa Perez
     * @author Fabian Juarez, Sara Echeverria, Jose Pablo Kiesling y Melissa Perez
-    * FileName: View
+    * FileName: Waze
     @version:
     - Creacion: 13/05/2022
-    - Ultima modificacion: 13/05/2022
-    
+    - Ultima modificacion: 16/05/2022
+    Clase que posee los metodos para el correcto funcionamiento del algoritmo Floyd
     */
 
     private ArrayList<Street> routes = new ArrayList<Street>();

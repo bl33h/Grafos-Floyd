@@ -2,11 +2,12 @@ public class Controller {
     /**
     * Copyright (C), 2022-2023, FabianJuarez SaraEcheverria Jose Pablo Kiesling Melissa Perez
     * @author Fabian Juarez, Sara Echeverria, Jose Pablo Kiesling y Melissa Perez
-    * FileName: View
+    * FileName: Controller
     @version:
     - Creacion: 13/05/2022
     - Ultima modificacion:13/05/2022
     Clase que controla las funciones del programa.
+    
     */
 
     public static void main(String[] args) throws FileNotFoundException {
