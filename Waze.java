@@ -18,6 +18,8 @@ public class Waze {
     private ArrayList<Street> routes = new ArrayList<Street>();
     private ArrayList<ArrayList<Integer>> weightMatrix = new ArrayList<ArrayList<Integer>>();
     private ArrayList<ArrayList<String>> distanceMatrix = new ArrayList<ArrayList<String>>();
+    private ArrayList<String> cities = new ArrayList<String>();
+    private ArrayList<String> newCities = new ArrayList<String>();
     private int inf = 314159265;
 
     public void read()throws FileNotFoundException{
@@ -28,6 +30,7 @@ public class Waze {
                 String[] elements = reader.nextLine().split("[ ]");
                 Street street = newStreet(elements[0], elements[1], Integer.parseInt(elements[2]));
                 routes.add(street);
+                cities.add(elements[0]); cities.add(elements[1]);
             }
             reader.close();
         }catch(FileNotFoundException e){
@@ -35,6 +38,17 @@ public class Waze {
 			throw new FileNotFoundException(s);
         }
         
+    }
+
+    private void checkCities(){
+        
+        if (cities.size() > 0){
+            newCities.add(cities.get(0)); 
+            for (int i = 1; i < cities.size(); i++){
+                if (!cities.get(i).equals(cities.get(i-1)))
+                    newCities.add(cities.get(i));
+            }
+        }
     }
 
     public Street newStreet(String origin, String destination, int distance){
@@ -49,6 +63,8 @@ public class Waze {
         for (i = 0; i < routes.size() && !checkStreet; i++)  
             if (routes.get(i).getOrigin().equals(origin) && routes.get(i).getDestination().equals(destination))
                 checkStreet = true;
+
+        return i;
     }
 
     public void pauseStreet(String origin, String destination){
