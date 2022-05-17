@@ -1,3 +1,5 @@
+import java.io.FileNotFoundException;
+
 public class Controller {
     /**
     * Copyright (C), 2022-2023, FabianJuarez SaraEcheverria Jose Pablo Kiesling Melissa Perez
@@ -15,15 +17,18 @@ public class Controller {
         int numMenu;
         View miVista = new View();
         miVista.menu();
+        String origin;
+        String destination;
+        int distance;
     
-        miVista.Welcome(); // Bienvenida al programa
+        miVista.welcome(); // Bienvenida al programa
         try{
             boolean flag = true;
             while(numMenu != 5 && flag){ // Imprime el menu principal
                 numMenu = miVista.menu();
                 switch(numMenu){
                     case 1: // Ingreso de Ciudad
-                        waze = new Waze(numMenu);
+                        waze.newStreet(origin, destination, distance);
                         flag = false;
                         break;
                     case 2:// Ubicacion centro del grafo
@@ -31,7 +36,7 @@ public class Controller {
                         flag = false;
                         break;
                     case 3: // Interrupcion entre ciudades
-                        waze = new Waze(numMenu, 0);
+                        waze.pauseStreet(origin,destination);
                         flag = false;
                         break;
                     case 4: // Nueva conexion entre ciudades
@@ -40,7 +45,6 @@ public class Controller {
                         break;
                     case 5: // Salir
                         miVista.end();
-                        waze.finalize();
                         break;
                 }
             }

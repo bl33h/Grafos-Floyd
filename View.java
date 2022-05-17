@@ -1,4 +1,5 @@
-    import java.util.Scanner;
+import java.util.Scanner;
+
 public class View{
     /**
     * Copyright (C), 2022-2023, FabianJuarez SaraEcheverria Jose Pablo Kiesling Melissa Perez
