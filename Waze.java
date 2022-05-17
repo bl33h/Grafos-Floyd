@@ -16,11 +16,11 @@ public class Waze {
     */
 
     private ArrayList<Street> routes = new ArrayList<Street>();
-    private Arrays<Integer> weightMatrix = new Matrix<Integer>();
-    private Matrix<String> distanceMatrix = new Matrix<String>();
+    private ArrayList<ArrayList<Integer>> weightMatrix = new ArrayList<ArrayList<Integer>>();
+    private ArrayList<ArrayList<String>> distanceMatrix = new ArrayList<ArrayList<String>>();
     private int inf = 314159265;
 
-    private void read()throws FileNotFoundException{
+    public void read()throws FileNotFoundException{
         try{
             File file = new File("guategrafo.txt");
             Scanner reader = new Scanner(file);
@@ -39,6 +39,7 @@ public class Waze {
 
     public Street newStreet(String origin, String destination, int distance){
         Street street = new Street(origin, destination, distance);
+        return street;
     }
 
     private int searchStreet(String origin, String destination){
