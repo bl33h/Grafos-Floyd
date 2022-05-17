@@ -1,7 +1,8 @@
 import java.io.File;  
 import java.util.Scanner;
 import java.io.FileNotFoundException; 
-import java.io.Matrix;
+import java.util.Arrays;
+import java.util.ArrayList;
 
 public class Waze {
     /**
@@ -10,21 +11,34 @@ public class Waze {
     * FileName: View
     @version:
     - Creacion: 13/05/2022
-    - Ultima modificacion:13/05/2022
+    - Ultima modificacion: 13/05/2022
     
     */
 
-    private Arraylist<Street> routes;
-    private Matrix<Integer> weightMatrix;
-    private Matrix<Integer> distanceMatrix;
+    private ArrayList<Street> routes = new ArrayList<Street>();
+    private Arrays<Integer> weightMatrix = new Matrix<Integer>();
+    private Matrix<String> distanceMatrix = new Matrix<String>();
 
-    private void read(){
+    private void read()throws FileNotFoundException{
+        try{
+            File file = new File("guategrafo.txt");
+            Scanner reader = new Scanner(file);
+            while(reader.hasNextLine()){
+                String[] elements = reader.nextLine().split("[ ]");
+                Street street = newStreet(elements[0], elements[1], Integer.parseInt(elements[2]));
+                routes.add(street);
+            }
+            reader.close();
+        }catch(FileNotFoundException e){
+            String s =  e.getMessage();
+			throw new FileNotFoundException(s);
+        }
         
     }
 
-    /*public void (String origin, String destination, int distance){
-
-    }*/
+    public Street newStreet(String origin, String destination, int distance){
+        Street street = new Street(origin, destination, distance);
+    }
 
     public void pauseStreet(){
 
@@ -40,20 +54,17 @@ public class Waze {
 
     private boolean verifyGraph(){
 
-        return true;
     }
 
     public String getRoute (String origin, String distance){
 
-        return routes;
     }
 
     public String showMatrix(){
-        return weightMatrix;
+        
     }
 
     public String getCenter(){
 
-        return distanceMatrix;
     }
 }

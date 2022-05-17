@@ -1,20 +1,27 @@
-import java.util.Map;
-import java.util.LinkedHashMap;
-
 public class Street {
-    private Map<String, String> cities = new LinkedHashMap<String, String>();
+    private String origin;
+    private String destination;
     private int distance;
 
     public Street(String origin, String destination, int distance){
-        this.cities.put(origin, destination);
+        this.origin = origin;
+        this.destination = destination;
         this.distance = distance;
     }
 
-    public String getDestination(String origin){
-        return this.cities.get(origin);
+    public String getOrigin(){
+        return this.origin;
+    }
+
+    public String getDestination(){
+        return this.destination;
     }
 
     public int getDistance(){
         return this.distance;
+    }
+
+    public void setDistance(int distance){
+        this.distance = distance;
     }
 }
