@@ -21,6 +21,7 @@ public class Waze {
     private ArrayList<String> cities = new ArrayList<String>();
     private ArrayList<String> newCities = new ArrayList<String>();
     private int inf = 314159265;
+    int[][] matrix = new int[inf][inf];
 
     public void read()throws FileNotFoundException{
         try{
@@ -72,8 +73,33 @@ public class Waze {
         routes.get(i).setDistance(inf);
     }
 
-    private void createMatrix(){
+    private void fillMatrix (int i, int j, int n){
+        int x = 2;
 
+        for (int k = i + 1; k < n; k++){
+            matrix[k][j] = x++;
+        }
+     
+        for (int k = 0; k < i; k++){
+            matrix[k][j] = x++;
+        }
+    }
+
+    private void createMatrix(int n){
+        int right = n - 1, left = 0;
+        for (int i = 0; i < n; i++){
+            if (i % 2 == 0){
+                matrix[i][right] = 1;
+                fillMatrix(i, right, n);
+                right--;
+            }
+             
+            else{
+                matrix[i][left] = 1;
+                fillMatrix(i, left, n);
+                left++;
+            }
+        }
     }
 
     private void Floyd(){
