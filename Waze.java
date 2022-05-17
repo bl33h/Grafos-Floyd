@@ -18,6 +18,7 @@ public class Waze {
     private ArrayList<Street> routes = new ArrayList<Street>();
     private Arrays<Integer> weightMatrix = new Matrix<Integer>();
     private Matrix<String> distanceMatrix = new Matrix<String>();
+    private int inf = 314159265;
 
     private void read()throws FileNotFoundException{
         try{
@@ -40,8 +41,18 @@ public class Waze {
         Street street = new Street(origin, destination, distance);
     }
 
-    public void pauseStreet(){
+    private int searchStreet(String origin, String destination){
+        int i;
+        boolean checkStreet = false;
 
+        for (i = 0; i < routes.size() && !checkStreet; i++)  
+            if (routes.get(i).getOrigin().equals(origin) && routes.get(i).getDestination().equals(destination))
+                checkStreet = true;
+    }
+
+    public void pauseStreet(String origin, String destination){
+        int i = searchStreet(origin, destination);
+        routes.get(i).setDistance(inf);
     }
 
     private void createMatrix(){
