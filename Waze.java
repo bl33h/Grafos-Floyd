@@ -99,20 +99,34 @@ public class Waze {
         }
     }
 
-    private void Floyd(){
+    private void Floyd(int weightMatrix){
         createMatrix();
+        for (int source = 1; source <= routes.size(); source ++){
+            for (int destination = 1; destination <= routes.size(); destination ++){
+                distanceMatrix.get(source).get(destination) = weightMatrix.get(source).get(destination);
+            }
+        }
+
+        for (int intermediate = 1; intermediate <= routes.size(); intermediate++){
+            for (int source = 1; source <= routes.size(); source++){
+                for (int destination = 1; destination <= routes.size(); destination++){
+                    if(distanceMatrix.get(source).get(intermediate) + distanceMatrix.get(intermediate).get(destination) < distanceMatrix.get(source).get(destination)){
+                        distanceMatrix.get(source).get(destination) = distanceMatrix.get(intermediate).get(destination);
+                    }
+                }
+            }
+        }
     }
 
     private boolean verifyGraph(){
-
     }
 
     public String getRoute (String origin, String distance){
+        
 
     }
 
     public String showMatrix(){
-        
     }
 
     public String getCenter(){
