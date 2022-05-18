@@ -21,7 +21,6 @@ public class Waze {
     private ArrayList<String> cities = new ArrayList<String>();
     private ArrayList<String> newCities = new ArrayList<String>();
     private int inf = 314159265;
-    int[][] matrix = new int[inf][inf];
 
     public void read()throws FileNotFoundException{
         try{
@@ -29,9 +28,7 @@ public class Waze {
             Scanner reader = new Scanner(file);
             while(reader.hasNextLine()){
                 String[] elements = reader.nextLine().split("[ ]");
-                Street street = newStreet(elements[0], elements[1], Integer.parseInt(elements[2]));
-                routes.add(street);
-                cities.add(elements[0]); cities.add(elements[1]);
+                newStreet(elements[0], elements[1], Integer.parseInt(elements[2]));
             }
             reader.close();
         }catch(FileNotFoundException e){
@@ -42,7 +39,6 @@ public class Waze {
     }
 
     private void checkCities(){
-        
         if (cities.size() > 0){
             newCities.add(cities.get(0)); 
             for (int i = 1; i < cities.size(); i++){
@@ -52,9 +48,11 @@ public class Waze {
         }
     }
 
-    public Street newStreet(String origin, String destination, int distance){
+    public void newStreet(String origin, String destination, int distance){
         Street street = new Street(origin, destination, distance);
-        return street;
+        routes.add(street);
+        cities.add(origin); 
+        cities.add(destination);
     }
 
     private int searchStreet(String origin, String destination){
@@ -73,37 +71,35 @@ public class Waze {
         routes.get(i).setDistance(inf);
     }
 
-    private void fillMatrix (int i, int j, int n){
-        int x = 2;
+    private void createMatrix(){
+        checkCities();
 
-        for (int k = i + 1; k < n; k++){
-            matrix[k][j] = x++;
-        }
-     
-        for (int k = 0; k < i; k++){
-            matrix[k][j] = x++;
-        }
-    }
+        ArrayList<Integer> tempIntArray = new ArrayList<Integer>();
+        ArrayList<String> tempStringArray = new ArrayList<String>();
 
-    private void createMatrix(int n){
-        int right = n - 1, left = 0;
-        for (int i = 0; i < n; i++){
-            if (i % 2 == 0){
-                matrix[i][right] = 1;
-                fillMatrix(i, right, n);
-                right--;
+        for (int i = 0; i < routes.size(); i++){
+            for (int j = 0; j < routes.size(); j++){
+                if (i == j){
+                    tempIntArray.set(j, 0);
+                    tempStringArray.set(j, "0");
+                }
+                else if (searchStreet(newCities.get(i), newCities.get(j)) == routes.size()){
+                    tempIntArray.set(j, inf);
+                }
+                else{
+                    int k = searchStreet(newCities.get(i), newCities.get(j));
+                    int distance = routes.get(k).getDistance();
+                    tempIntArray.set(j, distance);
+                    tempStringArray.set(j, newCities.get(j));
+                }
             }
-             
-            else{
-                matrix[i][left] = 1;
-                fillMatrix(i, left, n);
-                left++;
-            }
+            weightMatrix.set(i, tempIntArray);
+            distanceMatrix.set(i, tempStringArray);
         }
     }
 
     private void Floyd(){
-
+        createMatrix();
     }
 
     private boolean verifyGraph(){
