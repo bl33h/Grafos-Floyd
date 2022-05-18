@@ -59,11 +59,12 @@ public class Waze {
         int i;
         boolean checkStreet = false;
 
-        for (i = 0; i < routes.size() && !checkStreet; i++)  
+        for (i = 0; i < routes.size() || !checkStreet; i++)  
             if (routes.get(i).getOrigin().equals(origin) && routes.get(i).getDestination().equals(destination))
                 checkStreet = true;
-
-        return i;
+        if (checkStreet)
+            return i;
+        else return routes.size();
     }
 
     public void pauseStreet(String origin, String destination){
