@@ -119,6 +119,15 @@ public class Waze {
     }
 
     private boolean verifyGraph(){
+        boolean conexo = true;
+        for (int i =0 ; i<weightMatrix.size() && conexo;i++){
+            for (int j =0 ; j<weightMatrix.size() && conexo;j++){
+                if(i!=j && weightMatrix.get(i).get(j)==inf){
+                    conexo = false;
+                }
+            }
+        }
+        return conexo;
     }
 
     public String getRoute (String origin, String distance){
@@ -127,7 +136,35 @@ public class Waze {
     }
 
     public String showMatrix(){
-    }
+    String impresion = "\t";
+    for (int x=0; x < newCities.size(); x++){
+       impresion += newCities.get(x);
+   }
+   
+   for (int x=0; x < weightMatrix.size(); x++){
+       impresion += newCities.get(x);
+       for(int y=0; y < weightMatrix.get(x).size();y++){
+           impresion += weightMatrix.get(x).get(y);
+           if(y!=weightMatrix.get(x).size()-1){
+               impresion += "\t";
+           }
+       }
+   }
+   for (int x=0; x < newCities.size(); x++){
+       impresion += newCities.get(x);
+   }
+   
+   for (int x=0; x < distanceMatrix.size(); x++){
+       impresion += newCities.get(x);
+       for(int y=0; y < distanceMatrix.get(x).size();y++){
+           impresion += distanceMatrix.get(x).get(y);
+           if(y!=distanceMatrix.get(x).size()-1){
+               impresion += "\t";
+           }
+       }
+   }
+   return impresion;
+}
 
     public String getCenter(){
 
