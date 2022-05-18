@@ -14,12 +14,12 @@ public class Controller {
     */
 
     public static void main(String[] args) throws FileNotFoundException {
-        Waze waze;
-        int numMenu;
+        Waze waze = new Waze();
+        int numMenu = 0;
         View miVista = new View();
-        String origin;
-        String destination;
-        int distance;
+        String origin = "";
+        String destination = "";
+        int distance = 0;
         Scanner scan = new Scanner(System.in);
     
         miVista.menu();
@@ -40,7 +40,7 @@ public class Controller {
                         flag = false;
                         break;
                     case 2:// Ubicacion centro del grafo
-                        waze = new Waze(numMenu, 0);
+                        waze.getCenter();
                         flag = false;
                         break;
                     case 3: // Interrupcion entre ciudades
@@ -53,11 +53,16 @@ public class Controller {
                         flag = false;
                         break;
                     case 4: // Nueva conexion entre ciudades
-                        waze = new Waze(numMenu, 0);
+                        miVista.output("Ingresar el origen del que comenzara la nueva ruta");
+                        origin = scan.nextLine();
+                        miVista.output("Ingresar el destino del que finalizara la nueva ruta");
+                        destination = scan.nextLine();
+                        miVista.output("Ingresar la distancia que tendra la ruta del destino");
+                        distance = scan.nextInt();
+                        waze.newStreet(origin, destination, distance);
                         flag = false;
                         break;
                     case 5: // Salir
-
                         miVista.end();
                         break;
                 }
