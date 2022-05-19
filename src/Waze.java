@@ -99,26 +99,33 @@ public class Waze {
         }
     }
 
-    private void Floyd(int weightMatrix){
+    private void Floyd(){
         createMatrix();
-        for (int source = 1; source <= routes.size(); source ++){
-            for (int destination = 1; destination <= routes.size(); destination ++){
-                distanceMatrix.get(source).get(destination) = weightMatrix.get(source).get(destination);
-            }
-        }
-
-        for (int intermediate = 1; intermediate <= routes.size(); intermediate++){
-            for (int source = 1; source <= routes.size(); source++){
-                for (int destination = 1; destination <= routes.size(); destination++){
-                    if(distanceMatrix.get(source).get(intermediate) + distanceMatrix.get(intermediate).get(destination) < distanceMatrix.get(source).get(destination)){
-                        distanceMatrix.get(source).get(destination) = distanceMatrix.get(intermediate).get(destination);
+        int n = 0;
+        int i, j, k;
+        ArrayList<Integer> tempIntArray = new ArrayList<Integer>();
+        ArrayList<String> tempStringArray = new ArrayList<String>();
+        
+        for (k = 1; k < n; k++) {
+            for (i = 0; i < n; i++){
+                for (j = 0; j < n; j++){
+                    if (weightMatrix.get(i).get(j) > weightMatrix.get(i).get(k) + weightMatrix.get(k).get(j)){
+                        tempIntArray.set(j, weightMatrix.get(i).get(k) + weightMatrix.get(k).get(j));
+                        tempStringArray.set(j, newCities.get(i));
+                    }
+                    else{
+                        tempIntArray.set(j, weightMatrix.get(i).get(j));
+                        tempStringArray.set(j, newCities.get(j));
                     }
                 }
+                weightMatrix.set(i, tempIntArray);
+                distanceMatrix.set(i, tempStringArray);
             }
         }
     }
 
     private boolean verifyGraph(){
+        Floyd();
         boolean conexo = true;
         for (int i =0 ; i<weightMatrix.size() && conexo;i++){
             for (int j =0 ; j<weightMatrix.size() && conexo;j++){
@@ -131,42 +138,49 @@ public class Waze {
     }
 
     public String getRoute (String origin, String distance){
-        
+        if (verifyGraph()){
+            
+        }
 
     }
 
     public String showMatrix(){
-    String impresion = "\t";
-    for (int x=0; x < newCities.size(); x++){
-       impresion += newCities.get(x);
-   }
-   
-   for (int x=0; x < weightMatrix.size(); x++){
-       impresion += newCities.get(x);
-       for(int y=0; y < weightMatrix.get(x).size();y++){
-           impresion += weightMatrix.get(x).get(y);
-           if(y!=weightMatrix.get(x).size()-1){
-               impresion += "\t";
+        String impresion = "\t";
+
+        if (verifyGraph()){
+            for (int x=0; x < newCities.size(); x++){
+               impresion += newCities.get(x);
            }
-       }
-   }
-   for (int x=0; x < newCities.size(); x++){
-       impresion += newCities.get(x);
-   }
-   
-   for (int x=0; x < distanceMatrix.size(); x++){
-       impresion += newCities.get(x);
-       for(int y=0; y < distanceMatrix.get(x).size();y++){
-           impresion += distanceMatrix.get(x).get(y);
-           if(y!=distanceMatrix.get(x).size()-1){
-               impresion += "\t";
+           
+           for (int x=0; x < weightMatrix.size(); x++){
+               impresion += newCities.get(x);
+               for(int y=0; y < weightMatrix.get(x).size();y++){
+                   impresion += weightMatrix.get(x).get(y);
+                   if(y!=weightMatrix.get(x).size()-1){
+                       impresion += "\t";
+                   }
+               }
            }
-       }
-   }
-   return impresion;
-}
+           for (int x=0; x < newCities.size(); x++){
+               impresion += newCities.get(x);
+            }
+           
+           for (int x=0; x < distanceMatrix.size(); x++){
+               impresion += newCities.get(x);
+               for(int y=0; y < distanceMatrix.get(x).size();y++){
+                   impresion += distanceMatrix.get(x).get(y);
+                   if (y!=distanceMatrix.get(x).size()-1){
+                       impresion += "\t";
+                    }
+                }
+            }
+        }
+        return impresion;
+    }
 
     public String getCenter(){
+        if (verifyGraph()){
 
+        }
     }
 }
