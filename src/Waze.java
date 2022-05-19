@@ -1,3 +1,5 @@
+package src;
+
 import java.io.File;  
 import java.util.Scanner;
 import java.io.FileNotFoundException; 
@@ -21,6 +23,7 @@ public class Waze {
     private ArrayList<String> cities = new ArrayList<String>();
     private ArrayList<String> newCities = new ArrayList<String>();
     private int inf = 314159265;
+    private ArrayList<Integer> eccentricity = new ArrayList<Integer>();
 
     public void read()throws FileNotFoundException{
         try{
@@ -59,7 +62,7 @@ public class Waze {
         int i;
         boolean checkStreet = false;
 
-        for (i = 0; i < routes.size() || !checkStreet; i++)  
+        for (i = 0; i < routes.size() || !checkStreet; i++)
             if (routes.get(i).getOrigin().equals(origin) && routes.get(i).getDestination().equals(destination))
                 checkStreet = true;
         if (checkStreet)
@@ -105,7 +108,7 @@ public class Waze {
         int i, j, k;
         ArrayList<Integer> tempIntArray = new ArrayList<Integer>();
         ArrayList<String> tempStringArray = new ArrayList<String>();
-        
+
         for (k = 1; k < n; k++) {
             for (i = 0; i < n; i++){
                 for (j = 0; j < n; j++){
@@ -124,7 +127,7 @@ public class Waze {
         }
     }
 
-    private boolean verifyGraph(){
+    public boolean verifyGraph(){
         Floyd();
         boolean conexo = true;
         for (int i =0 ; i<weightMatrix.size() && conexo;i++){
@@ -137,11 +140,18 @@ public class Waze {
         return conexo;
     }
 
-    public String getRoute (String origin, String distance){
-        if (verifyGraph()){
-            
-        }
-
+    public String getRoute (String origin, String destination){
+        String route = "";
+            int i = searchCity(origin);
+            int j = searchCity(destination);
+            String city = distanceMatrix.get(i).get(j);
+            if (city.equals(destination)){
+                route += destination;
+            }
+            else{
+                route += city + getRoute(city, destination);
+            }
+            return route;
     }
 
     public String showMatrix(){
@@ -178,9 +188,42 @@ public class Waze {
         return impresion;
     }
 
-    public String getCenter(){
-        if (verifyGraph()){
+    private int searchCity(String city){
+        int numero;
+        boolean flag =false;
+        for (numero = 0; numero < newCities.size() && !flag ; numero++)
+            if(newCities.get(numero).equals(city))
+                flag = true;
+                if (flag)
+                    return numero;
+                else return newCities.size();
+    }
 
+    private void generateEccentricity(){
+        for(int i=0; i < newCities.size();i++)
+            eccentricity.set(i, 0);
+        for(int i=0; i< weightMatrix.size(); i++ ){
+            for(int j=0; j<weightMatrix.size();j++){
+                if(weightMatrix.get(i).get(j)>eccentricity.get(j))
+                    eccentricity.set(j, weightMatrix.get(i).get(j));
+            }
         }
+    }
+
+    public String getCenter(){
+        generateEccentricity();
+        int center = inf;
+        int index = 0;
+        boolean flag = false;
+        for (int i =0; i < eccentricity.size(); i++)
+            if(center>eccentricity.get(i))
+                center = eccentricity.get(i);
+        
+        for(int i =0; i < eccentricity.size() && !flag; i++)
+            if(center == eccentricity.get(i) ){
+                index = i;
+                flag = true;
+            }
+        return newCities.get(index) ;
     }
 }
