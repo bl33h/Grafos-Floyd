@@ -72,6 +72,12 @@ public class Waze{
         cities.add(destination);
     }
 
+    /****************************************************************
+     * return the position of a street in a group of routes
+     * @param origin
+     * @param destination
+     * @return route position in array
+     */
     private int searchStreet(String origin, String destination){
         int pos = routes.size();
         boolean checkStreet = false;
@@ -83,6 +89,7 @@ public class Waze{
             }
         return pos;
     }
+    //***************************************************************
 
     public void pauseStreet(String origin, String destination){
         int i = searchStreet(origin, destination);
