@@ -367,4 +367,12 @@ public class Waze{
         return newCities.get(index) + " con valor de: " + eccentricity.get(index);
     }
     //****************************************************************
+
+    public Integer[][] getWM(){
+        return this.weightMatrix;
+    }
+
+    public String[][] getdM(){
+        return this.distanceMatrix;
+    }
 }
