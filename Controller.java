@@ -26,7 +26,8 @@ public class Controller {
                             String destination = miVista.newDestination();
                             String route ="";
                             if(waze.verifyGraph())
-                                route = waze.getRoute(origin, destination);
+                                route += waze.getPath(origin, destination);
+                                route += origin + ", " +waze.getRoute(origin, destination);
                             miVista.output(route);
                             break;
                         case 2:// Ubicacion centro del grafo

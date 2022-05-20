@@ -122,7 +122,7 @@ public class View{
     public Integer newDistance(){
         Integer distance = 0;
         output("Ingresar la distancia entre las ciudades");
-        distance = scan.nextInt();
+        distance = Integer.parseInt(scan.nextLine());
         return distance;
     }
 }

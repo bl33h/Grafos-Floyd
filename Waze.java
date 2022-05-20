@@ -16,8 +16,8 @@ public class Waze{
     */
 
     private ArrayList<Street> routes = new ArrayList<Street>();
-    private Integer[][] wM;
-    private String[][] dM;
+    private Integer[][] weightMatrix;
+    private String[][] distanceMatrix;
     private ArrayList<String> cities = new ArrayList<String>();
     private ArrayList<String> newCities = new ArrayList<String>();
     private int inf = 31416;
@@ -43,7 +43,7 @@ public class Waze{
         }
     }
 
-    private void checkCities(){
+    public void checkCities(){
         Collections.sort(cities);
         int size = newCities.size();
 
@@ -94,40 +94,40 @@ public class Waze{
     public void createMatrix(){
         checkCities();
 
-        wM = new Integer[newCities.size()][newCities.size()];
-        dM = new String[newCities.size()][newCities.size()];
+        weightMatrix = new Integer[newCities.size()][newCities.size()];
+        distanceMatrix = new String[newCities.size()][newCities.size()];
 
         for (int i = 0; i < newCities.size(); i++){
             for (int j = 0; j < newCities.size(); j++){
                 if (i == j){
-                    wM[i][j] = 0;
-                    dM[i][j] = "0";
+                    weightMatrix[i][j] = 0;
+                    distanceMatrix[i][j] = "0";
                 }
                 else if (searchStreet(newCities.get(i), newCities.get(j)) == routes.size()){
-                    wM[i][j] = inf;
-                    dM[i][j] = newCities.get(j);
+                    weightMatrix[i][j] = inf;
+                    distanceMatrix[i][j] = newCities.get(j);
                 }
                 else{
                     int k = searchStreet(newCities.get(i), newCities.get(j));
                     int distance = routes.get(k).getDistance();
-                    wM[i][j] = distance;
-                    dM[i][j] = newCities.get(j);
+                    weightMatrix[i][j] = distance;
+                    distanceMatrix[i][j] = newCities.get(j);
                 }
                 
             }
         }        
     }
 
-    private void Floyd(){
+    public void Floyd(){
         createMatrix();
         int n = newCities.size();
 
-        for (int k = 1; k < n; k++) {
+        for (int k = 0; k < n; k++) {
             for (int i = 0; i < n; i++){
                 for (int j = 0; j < n; j++){
-                    if (wM[i][j] > wM[i][k] + wM[k][j]){
-                        wM[i][j] = wM[i][k] + wM[k][j];
-                        dM[i][j] = newCities.get(i);
+                    if (weightMatrix[i][j] > weightMatrix[i][k] + weightMatrix[k][j]){
+                        weightMatrix[i][j] = weightMatrix[i][k] + weightMatrix[k][j];
+                        distanceMatrix[i][j] = newCities.get(k);
                     }
                 }
             }
@@ -140,7 +140,7 @@ public class Waze{
         boolean conexo = true;
         for (int i =0 ; i< newCities.size() && conexo;i++){
             for (int j =0 ; j< newCities.size() && conexo;j++){
-                if(i!=j && wM[i][j] == inf){
+                if(i!=j && weightMatrix[i][j] == inf){
                     conexo = false;
                 }
             }
@@ -148,16 +148,24 @@ public class Waze{
         return conexo;
     }
 
+    public String getPath(String origin, String destination){
+        String path = "La distancia más corta es: ";
+        int i = searchCity(origin);
+        int j = searchCity(destination);
+        path += weightMatrix[i-1][j-1] + " km \n";
+        return path;
+    }
+
     public String getRoute (String origin, String destination){
         String route = "";
         int i = searchCity(origin);
         int j = searchCity(destination);
-        String city = dM[i][j];
+        String city = distanceMatrix[i-1][j-1];
         if (city.equals(destination)){
             route += destination;
         }
         else{
-            route += city + getRoute(city, destination);
+            route += city + ", " + getRoute(city, destination);
         }
         return route;
     }
@@ -166,10 +174,28 @@ public class Waze{
         String wm = "";
         String dm = "";
         String impresion = "\t";
+
         for (int i = 0; i < newCities.size(); i++){
+            wm += "\t | \t" + newCities.get(i).charAt(0);
+            dm += "\t | \t" + newCities.get(i).charAt(0);
+        }
+        wm += "\n";
+        dm += "\n";
+
+        for (int i = 0; i < newCities.size() + 1; i++){
+            wm += "---------------";
+            dm += "---------------";
+        }
+
+        wm += "\n";
+        dm += "\n";
+
+        for (int i = 0; i < newCities.size(); i++){
+            wm += newCities.get(i).charAt(0);
+            dm += newCities.get(i).charAt(0);
             for (int j = 0; j < newCities.size(); j++){
-                wm += wM[i][j] + "\t | \t";
-                dm += dM[i][j].charAt(0) + "\t | \t";
+                wm += "\t | \t" + weightMatrix[i][j];
+                dm += "\t | \t" + distanceMatrix[i][j].charAt(0);
             }
             wm += "\n";
             dm += "\n";
@@ -204,8 +230,8 @@ public class Waze{
             eccentricity.add(i, 0);
         for(int i=0; i< newCities.size(); i++ ){
             for(int j=0; j< newCities.size();j++){
-                if(wM[i][j] > eccentricity.get(j))
-                    eccentricity.set(j, wM[i][j]);
+                if(weightMatrix[i][j] > eccentricity.get(j))
+                    eccentricity.set(j, weightMatrix[i][j]);
             }
         }
     }
