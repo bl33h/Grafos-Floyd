@@ -9,7 +9,7 @@ public class View{
     * FileName: View
     @version:
     - Creacion: 13/05/2022
-    - Ultima modificacion:13/05/2022
+    - Ultima modificacion: 20/05/2022
     Clase que sirve como vista hacia el usuario la cual imprimira a pantalla
     
     */
