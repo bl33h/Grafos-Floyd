@@ -8,7 +8,7 @@ public class Controller {
     @version:
     - Creacion: 13/05/2022
     - Ultima modificacion: 20/05/2022
-    Clase que controla las funciones del programa.
+    Class that controls the functions of the program.
     */
 
     public static void main(String[] args) throws FileNotFoundException {

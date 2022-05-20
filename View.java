@@ -1,17 +1,14 @@
-
-
 import java.util.Scanner;
 
 public class View{
     /**
-    * Copyright (C), 2022-2023, FabianJuarez SaraEcheverria Jose Pablo Kiesling Melissa Perez
+    * Copyright (C), 2022-2023, Fabian Juarez Sara Echeverria Jose Pablo Kiesling Melissa Perez
     * @author Fabian Juarez, Sara Echeverria, Jose Pablo Kiesling y Melissa Perez
     * FileName: View
     @version:
-    - Creacion: 13/05/2022
-    - Ultima modificacion: 20/05/2022
-    Clase que sirve como vista hacia el usuario la cual imprimira a pantalla
-    
+    - Creation: 13/05/2022
+    - Last modification: 20/05/2022
+    Class that works as a view to the user.
     */
 
     //---------------------------PROPIEDADES--------------------------
