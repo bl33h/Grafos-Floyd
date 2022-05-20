@@ -17,7 +17,7 @@ public class Waze{
 
     //---------------------------PROPERTIES---------------------------
     private ArrayList<Street> routes = new ArrayList<Street>(); 
-    private Integer[][] weightMatrix; 
+    private int [][] weightMatrix; 
     private String[][] distanceMatrix;
     private ArrayList<String> cities = new ArrayList<String>();
     private ArrayList<String> newCities = new ArrayList<String>();
@@ -127,7 +127,7 @@ public class Waze{
         checkCities();
 
         //Instance the matrix with the length of the amount of cities 
-        weightMatrix = new Integer[newCities.size()][newCities.size()];
+        weightMatrix = new int[newCities.size()][newCities.size()];
         distanceMatrix = new String[newCities.size()][newCities.size()];
 
         //Determine each value of the matrix
@@ -368,7 +368,7 @@ public class Waze{
     }
     //****************************************************************
 
-    public Integer[][] getWM(){
+    public int[][] getWM(){
         return this.weightMatrix;
     }
 
