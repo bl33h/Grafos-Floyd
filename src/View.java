@@ -51,7 +51,8 @@ public class View{
             System.out.println("2. Ver la ciudad que se encuentra en el centro del grafo");
             System.out.println("3. Interrupcion entre un par de ciudades");
             System.out.println("4. Nueva conexion entre cuidades");
-            System.out.println("5. Salir");
+            System.out.println("5. Mostrar matrices");
+            System.out.println("6. Salir");
             System.out.println("\n************ Por, favor elija la opcion que desea ejecutar **********\n");
             tmpTexto = scan.nextLine();
 
@@ -61,8 +62,8 @@ public class View{
                 numMenu = Integer.parseInt(tmpTexto);
                 salir = "si";
             }
-            while (tmpTexto.isEmpty()||!isNumeric || numMenu < 1 || numMenu > 5) {
-                System.out.println("ERROR, ingresar una opcion de menu mayor que 0" + " o menor que 5");
+            while (tmpTexto.isEmpty()||!isNumeric || numMenu < 1 || numMenu > 6) {
+                System.out.println("ERROR, ingresar una opcion de menu mayor que 0" + " o menor que 6");
                 tmpTexto = scan.nextLine();
                 isNumeric = tmpTexto.chars().allMatch( Character::isDigit );
                 numMenu = 0;
@@ -103,4 +104,25 @@ public class View{
         System.out.println(s); //mensaje que se le imprimira al usuario
     }
     //****************************************************************
+
+    public String newOrigin(){
+        String origin = "";
+        output("Ingresar la ciudad de origen");
+        origin = scan.nextLine();
+        return origin;
+    }
+
+    public String newDestination(){
+        String destination ="";
+        output("Ingresar la ciudad destino");
+        destination = scan.nextLine();
+        return destination;
+    }
+
+    public Integer newDistance(){
+        Integer distance = 0;
+        output("Ingresar la distancia entre las ciudades");
+        distance = scan.nextInt();
+        return distance;
+    }
 }

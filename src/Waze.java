@@ -25,7 +25,11 @@ public class Waze {
     private int inf = 314159265;
     private ArrayList<Integer> eccentricity = new ArrayList<Integer>();
 
-    public void read()throws FileNotFoundException{
+    public Waze() throws FileNotFoundException{
+        read();
+    }
+
+    private void read()throws FileNotFoundException{
         try{
             File file = new File("guategrafo.txt");
             Scanner reader = new Scanner(file);
