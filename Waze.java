@@ -15,6 +15,7 @@ public class Waze{
     Clase que posee los metodos para el correcto funcionamiento del algoritmo Floyd
     */
 
+    //---------------------------PROPERTIES---------------------------
     private ArrayList<Street> routes = new ArrayList<Street>();
     private Integer[][] weightMatrix;
     private String[][] distanceMatrix;
@@ -23,6 +24,7 @@ public class Waze{
     private int inf = 31416;
     private ArrayList<Integer> eccentricity = new ArrayList<Integer>();
 
+    //---------------------------METHODS------------------------------
     public Waze() throws FileNotFoundException{
         read();
     }
