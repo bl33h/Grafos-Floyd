@@ -19,7 +19,7 @@ public class View{
 
     //---------------------------METODOS------------------------------
     /*****************************************************************
-     *
+     * Print the introduction of the program
      */
     public void welcome() {
         System.out.println("------------- Bienvenido/bienvenida a el nuevo Waze el cual calculara la ruta mas corta ---------------- "); // Titulo
@@ -28,7 +28,7 @@ public class View{
     //****************************************************************
 
     /*****************************************************************
-     *
+     * Constructor for the view
      */
     public View(){
         scan = new Scanner(System.in); // Scanner
@@ -36,16 +36,16 @@ public class View{
     //****************************************************************
 
     /*****************************************************************
-     * retorna el valor del elemento seleccionado por el usuario
+     * Return the value for the element selected for the user
      * @return
      */
-    public int menu(){ //Menu principal para que el usuario eliga la opcion a realizar
+    public int menu(){ //Principal Menu for the users that choose an option
         String salir = "";
         int numMenu = 0;
         String tmpTexto = "";
         boolean isNumeric = false;
         while(!salir.equalsIgnoreCase("si")){
-            //Se imprime el menu en pantalla y se le pide al usuario un numero del menu
+            //Print the menu on screen and  the user is prompted for a number from the menu
             System.out.println("\n************************* Escojala opcion que desea utilizar ************************************\n");
             System.out.println("1. Ingresar la ciudad de origen y ciudad de destino");
             System.out.println("2. Ver la ciudad que se encuentra en el centro del grafo");
@@ -56,7 +56,7 @@ public class View{
             System.out.println("\n************ Por, favor elija la opcion que desea ejecutar **********\n");
             tmpTexto = scan.nextLine();
 
-            // Se verifica que el numero que dio el usuario fue valido
+            // Verify that the number given by the user was valid.
             isNumeric = tmpTexto.chars().allMatch( Character::isDigit );
             if (isNumeric && !tmpTexto.isEmpty()){
                 numMenu = Integer.parseInt(tmpTexto);
@@ -78,7 +78,7 @@ public class View{
     //****************************************************************
 
     /*****************************************************************
-     * Mensaje que dara al finalizar el programa
+     * Message to be given at the end of the program
      */
     public void end(){
         System.out.println(" ------------ Gracias por utilizar nuestro programa ------------ \n"); // Mensaje que se mostrara al cerrar el programa
@@ -88,7 +88,7 @@ public class View{
     //****************************************************************
 
     /*****************************************************************
-     * Asigna un valor pasado como parametro
+     * Assigns a passed value as a parameter
      * @param e
      */
     public void error(String e){
@@ -97,32 +97,47 @@ public class View{
     //****************************************************************
 
     /*****************************************************************
-     * Asigna un mensaje a mostrar en pantalla
-     *@param s
+     * Assigns a message to be displayed on the screen
+     * @param s
      */
     public void output(String s){
-        System.out.println(s); //mensaje que se le imprimira al usuario
+        System.out.println(s); //Message to be printed to the user
     }
     //****************************************************************
-
+    
+    /*****************************************************************
+    *  asks the user for the origin printing a message on the screen
+    * @return the origin 
+    */
     public String newOrigin(){
         String origin = "";
         output("Ingresar la ciudad de origen");
         origin = scan.nextLine();
         return origin;
     }
+    //****************************************************************
 
+    /*****************************************************************
+    *  asks the user for the destination printing a message on the screen
+    * @return the destination 
+    */
     public String newDestination(){
         String destination ="";
         output("Ingresar la ciudad destino");
         destination = scan.nextLine();
         return destination;
     }
+    //****************************************************************
 
+    /*****************************************************************
+    *  asks the user for the distance printing a message on the screen
+    * @return the distance
+    */
     public Integer newDistance(){
         Integer distance = 0;
         output("Ingresar la distancia entre las ciudades");
         distance = Integer.parseInt(scan.nextLine());
         return distance;
     }
+    //****************************************************************
 }
