@@ -1,5 +1,4 @@
 import java.io.FileNotFoundException;
-import java.util.Scanner;
 
 public class Controller {
     /**
@@ -48,10 +47,9 @@ public class Controller {
                             waze.newStreet(origin3, destination3, distance3);
                             break;
                         case 5: //Mostrar matrices
-                            if(waze.verifyGraph()){
+                                waze.verifyGraph();
                                 String matrix = waze.showMatrix();
                                 miVista.output(matrix);
-                            }
                             break;
                         case 6: // Salir
                             miVista.end();
