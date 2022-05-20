@@ -150,16 +150,16 @@ public class Waze{
 
     public String getRoute (String origin, String destination){
         String route = "";
-            int i = searchCity(origin);
-            int j = searchCity(destination);
-            String city = dM[i][j];
-            if (city.equals(destination)){
-                route += destination;
-            }
-            else{
-                route += city + getRoute(city, destination);
-            }
-            return route;
+        int i = searchCity(origin);
+        int j = searchCity(destination);
+        String city = dM[i][j];
+        if (city.equals(destination)){
+            route += destination;
+        }
+        else{
+            route += city + getRoute(city, destination);
+        }
+        return route;
     }
 
     public String showMatrix(){
@@ -193,8 +193,15 @@ public class Waze{
     }
 
     private void generateEccentricity(){
+        int size = eccentricity.size();
+
+        if(eccentricity.size() > 0){
+            for(int i = size -1; i >= 0; i-- )
+                eccentricity.remove(i);
+        }
+
         for(int i=0; i < newCities.size();i++)
-            eccentricity.set(i, 0);
+            eccentricity.add(i, 0);
         for(int i=0; i< newCities.size(); i++ ){
             for(int j=0; j< newCities.size();j++){
                 if(wM[i][j] > eccentricity.get(j))
@@ -205,6 +212,7 @@ public class Waze{
 
     public String getCenter(){
         generateEccentricity();
+        System.out.println(eccentricity);
         int center = inf;
         int index = 0;
         boolean flag = false;
