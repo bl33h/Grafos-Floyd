@@ -375,4 +375,12 @@ public class Waze{
     public String[][] getdM(){
         return this.distanceMatrix;
     }
+
+    public ArrayList<String> getCities(){
+        return this.newCities;
+    }
+
+    public ArrayList<Street> getRoutes(){
+        return this.routes;
+    }
 }
