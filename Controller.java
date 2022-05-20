@@ -14,25 +14,33 @@ public class Controller {
     public static void main(String[] args) throws FileNotFoundException {
         Waze waze = new Waze();
         int numMenu = 0;
+        waze.read();
         View miVista = new View();
             miVista.welcome(); // Welcome message with instructions
             try{
                 while(numMenu != 6){ // It shows the menu
                     numMenu = miVista.menu();
                     switch(numMenu){
-                        case 1: // It allows the input of a new city
+                        case 1: // Search the shortes path
                             String origin = miVista.newOrigin();
                             String destination = miVista.newDestination();
-                            String route ="";
-                            if(waze.verifyGraph())
+                            String route = "";
+                            if(waze.verifyGraph()){
                                 route += waze.getPath(origin, destination);
-                                route += origin + ", " +waze.getRoute(origin, destination);
+                                route += "La ruta a seguir es: " + origin + waze.getRoute(origin, destination) + ", " + destination;
+                            }
+                            else
+                                route += "ERROR: El Grafo no es conexo";
+                            miVista.output("");
                             miVista.output(route);
                             break;
                         case 2:// It shows the location of the center of the graph
                             String center = "";
                             if (waze.verifyGraph())
-                                center = waze.getCenter();
+                                center = "El centro del grafo es " + waze.getCenter();
+                            else
+                                center += "ERROR: El Grafo no es conexo";
+                            miVista.output("");
                             miVista.output(center);
                             break;
                         case 3: // Interruption between cities
@@ -47,9 +55,9 @@ public class Controller {
                             waze.newStreet(origin3, destination3, distance3);
                             break;
                         case 5: // It shows the matrix
-                                waze.verifyGraph();
-                                String matrix = waze.showMatrix();
-                                miVista.output(matrix);
+                            waze.verifyGraph();
+                            String matrix = waze.showMatrix();
+                            miVista.output(matrix);
                             break;
                         case 6: // Exit the menu
                             miVista.end();

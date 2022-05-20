@@ -43,7 +43,7 @@ public class View{
         boolean isNumeric = false;
         while(!salir.equalsIgnoreCase("si")){
             //Print the menu on screen and  the user is prompted for a number from the menu
-            System.out.println("\n************************* Escojala opcion que desea utilizar ************************************\n");
+            System.out.println("\n************************* Escoja la opcion que desea utilizar ************************************\n");
             System.out.println("1. Ingresar la ciudad de origen y ciudad de destino");
             System.out.println("2. Ver la ciudad que se encuentra en el centro del grafo");
             System.out.println("3. Interrupcion entre un par de ciudades");

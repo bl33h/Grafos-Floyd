@@ -26,19 +26,10 @@ public class Waze{
 
     //---------------------------METHODS------------------------------
     /*****************************************************************
-     * instances the class and read the file
-     * @throws FileNotFoundException
-     */
-    public Waze() throws FileNotFoundException{
-        read();
-    }
-    //****************************************************************
-
-    /*****************************************************************
      * reads a file and add creates streets
      * @throws FileNotFoundException
      */
-    private void read()throws FileNotFoundException{
+    public void read()throws FileNotFoundException{
         try{
             File file = new File("guategrafo.txt");
             Scanner reader = new Scanner(file);
@@ -206,15 +197,22 @@ public class Waze{
      * @param destination
      * @return
      */
-    public String getPath(String origin, String destination){
-        String path = "La distancia más corta es: ";
+    public String getPath(String origin, String destination) throws Exception{
+        try{
+            String path = "La distancia más corta es: ";
 
-        //Searchs the value in pos [i-1] [j-1]
-        int i = searchCity(origin);
-        int j = searchCity(destination);
-        path += weightMatrix[i-1][j-1] + " km \n";
+            //Searchs the value in pos [i-1] [j-1]
+            int i = searchCity(origin);
+            int j = searchCity(destination);
+            path += weightMatrix[i-1][j-1] + " km \n";
 
-        return path;
+            return path;
+        }
+        catch (Exception e){
+            String s =  "No existe la(s) ciudad(es) ingresada(s)";
+			throw new Exception(s);
+        }
+
     }
     //****************************************************************
 
@@ -224,23 +222,29 @@ public class Waze{
      * @param destination
      * @return
      */
-    public String getRoute (String origin, String destination){
-        String route = "";
+    public String getRoute (String origin, String destination) throws Exception{
+        try{
+            String route = "";
 
-        //Obtains the city between
-        int i = searchCity(origin);
-        int j = searchCity(destination);
-        String city = distanceMatrix[i-1][j-1];
+            //Obtains the city between
+            int i = searchCity(origin);
+            int j = searchCity(destination);
+            String city = distanceMatrix[i-1][j-1];
 
-        //Verify if the city searched is the same that the destination
-        if (city.equals(destination)){
-            route += destination;
+            //Verify if the city searched is the same that the destination
+            if (city.equals(destination)){
+                route += "";
+            }
+            else{ //If not, do recursive function with the new city as origin
+                route += getRoute(origin, city) + ", " + city;
+            }
+            
+            return route;
         }
-        else{ //If not, do recursive function with the new city as origin
-            route += city + ", " + getRoute(city, destination);
+        catch (Exception e){
+            String s =  "No existe la ciudad ingresada";
+			throw new Exception(s);
         }
-
-        return route;
     }
     //****************************************************************
 
@@ -251,7 +255,7 @@ public class Waze{
     public String showMatrix(){
         String wm = "";
         String dm = "";
-        String impresion = "\t";
+        String impresion = "";
 
         //Headers of matrix
         for (int i = 0; i < newCities.size(); i++){
@@ -279,8 +283,8 @@ public class Waze{
             wm += "\n";
             dm += "\n";
         }
-        System.out.println(wm);
-        System.out.println(dm);
+        
+        impresion += "Matriz de Adyacencia: \n\n" + wm + "\n\n Matriz de dirección: \n\n" + dm;
 
         return impresion;
     }
@@ -290,19 +294,26 @@ public class Waze{
      * searchs city in yhe array
      * @param city
      * @return
+     * @throws Exception
      */
-    private int searchCity(String city){
-        int numero;
-        boolean flag =false;
+    private Integer searchCity(String city) throws Exception{
+        try{
+            int numero;
+            boolean flag =false;
 
-        for (numero = 0; numero < newCities.size() && !flag ; numero++)
-            if(newCities.get(numero).equals(city))
-                flag = true;
+            for (numero = 0; numero < newCities.size() && !flag ; numero++)
+                if(newCities.get(numero).equals(city))
+                    flag = true;
 
-        if (flag)
-            return numero;
-        else 
-            return newCities.size();
+            if (flag)
+                return numero;
+            else 
+                return null;
+        }
+        catch (Exception e){
+            String s =  "No existe la ciudad ingresada";
+			throw new Exception(s);
+        }
     }
     //****************************************************************
 
@@ -352,8 +363,8 @@ public class Waze{
                 index = i;
                 flag = true;
             }
-            
-        return newCities.get(index) ;
+
+        return newCities.get(index) + " con valor de: " + eccentricity.get(index);
     }
     //****************************************************************
 }
