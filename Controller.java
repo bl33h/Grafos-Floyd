@@ -21,7 +21,7 @@ public class Controller {
                 while(numMenu != 6){ // It shows the menu
                     numMenu = miVista.menu();
                     switch(numMenu){
-                        case 1: // Search the shortes path
+                        case 1: // Search the shortest path
                             String origin = miVista.newOrigin();
                             String destination = miVista.newDestination();
                             String route = "";
