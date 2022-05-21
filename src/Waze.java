@@ -80,6 +80,8 @@ public class Waze{
     public void newStreet(String origin, String destination, int distance){
         Street street = new Street(origin, destination, distance);
         routes.add(street);
+        street = new Street(destination, origin, distance);
+        routes.add(street);
         cities.add(origin); 
         cities.add(destination);
     }
